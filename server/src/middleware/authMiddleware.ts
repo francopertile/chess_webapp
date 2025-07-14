@@ -27,11 +27,14 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
       // Verify token
       const decoded = jwt.verify(token, JWT_SECRET) as { userId: number };
       
-      // Get user from the token and attach to request object
-      req.user = await prisma.user.findUnique({
+      // Get user from the token
+      const user = await prisma.user.findUnique({
         where: { id: decoded.userId },
         select: { id: true }, // Only select the id for performance
       });
+
+      // ESTA ES LA LÍNEA CORREGIDA: Si user es null, asigna undefined.
+      req.user = user || undefined;
 
       if (!req.user) {
         return res.status(401).json({ error: 'Not authorized, user not found' });
