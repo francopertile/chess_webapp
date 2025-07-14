@@ -2,9 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider      = "prisma-client-js"
-  // AÑADE ESTA LÍNEA PARA ASEGURAR QUE EL MOTOR CORRECTO SE INCLUYA EN VERCEL
-  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+  provider = "prisma-client-js"
+  // ESTA ES LA CONFIGURACIÓN MÁS ROBUSTA PARA VERCEL Y OTROS ENTORNOS SERVERLESS
+  binaryTargets = ["native", "debian-openssl-1.1.x", "rhel-openssl-1.0.x"]
 }
 
 datasource db {
@@ -68,3 +68,4 @@ model UserProgress {
 
   @@unique([userId, exerciseId]) // Un usuario solo puede tener un progreso por ejercicio
 }
+
