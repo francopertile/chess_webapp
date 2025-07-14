@@ -2,7 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  // AÑADE ESTA LÍNEA PARA ASEGURAR QUE EL MOTOR CORRECTO SE INCLUYA EN VERCEL
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
 datasource db {
@@ -42,13 +44,13 @@ model Exercise {
 }
 
 model User {
-  id              Int            @id @default(autoincrement())
-  username        String         @unique
-  email           String         @unique
-  password        String
-  total_time_played Int          @default(0)
-  progress        UserProgress[]
-  createdAt       DateTime       @default(now())
+  id                Int            @id @default(autoincrement())
+  username          String         @unique
+  email             String         @unique
+  password          String
+  total_time_played Int            @default(0)
+  progress          UserProgress[]
+  createdAt         DateTime       @default(now())
 }
 
 model UserProgress {
