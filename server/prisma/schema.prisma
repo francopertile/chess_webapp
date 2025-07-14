@@ -3,8 +3,8 @@
 
 generator client {
   provider = "prisma-client-js"
-  // ESTA ES LA CONFIGURACIÓN MÁS ROBUSTA PARA VERCEL Y OTROS ENTORNOS SERVERLESS
-  binaryTargets = ["native", "debian-openssl-1.1.x", "rhel-openssl-1.0.x"]
+  // ESTA ES LA CONFIGURACIÓN CORRECTA PARA RENDER Y OTROS ENTORNOS MODERNOS
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
