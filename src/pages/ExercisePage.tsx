@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Chess } from 'chess.js';
 import { Chessboard } from 'react-chessboard';
 import { Lightbulb, RotateCcw, ChevronRight, Timer } from 'lucide-react';
+import API_BASE_URL from '../apiConfig'; // <-- IMPORTAR LA NUEVA CONFIGURACIÓN
 
 type Exercise = {
   id: number;
@@ -40,7 +41,8 @@ export function ExercisePage() {
     if (!bookId) return;
     let isMounted = true;
     setIsLoading(true);
-    fetch(`http://localhost:3001/api/books/${bookId}/exercises`)
+    // USAR LA NUEVA VARIABLE
+    fetch(`${API_BASE_URL}/api/books/${bookId}/exercises`)
       .then(res => res.ok ? res.json() : Promise.reject(new Error(`Server responded with ${res.status}`)))
       .then(data => isMounted && setExercises(data))
       .catch(err => isMounted && setError(err.message))
@@ -57,7 +59,6 @@ export function ExercisePage() {
       if (timerRef.current) clearInterval(timerRef.current);
       timerRef.current = setInterval(() => setTime(prevTime => prevTime + 1), 1000);
     }
-    // Cleanup timer on component unmount or when exercise changes
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
@@ -65,10 +66,11 @@ export function ExercisePage() {
 
   const saveProgress = async () => {
     const token = localStorage.getItem('authToken');
-    if (!token || !currentExercise) return; // Don't save if not logged in
+    if (!token || !currentExercise) return;
 
     try {
-      await fetch('http://localhost:3001/api/progress', {
+      // USAR LA NUEVA VARIABLE
+      await fetch(`${API_BASE_URL}/api/progress`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -94,9 +96,9 @@ export function ExercisePage() {
     setGame(gameCopy);
 
     if (move.san === currentExercise?.solution_moves) {
-      if (timerRef.current) clearInterval(timerRef.current); // Stop the timer
+      if (timerRef.current) clearInterval(timerRef.current);
       setSolved(true);
-      saveProgress(); // <-- SAVE PROGRESS ON SOLVE
+      saveProgress();
       setTimeout(() => alert('¡Correcto!'), 100);
     } else {
       setTimeout(() => {

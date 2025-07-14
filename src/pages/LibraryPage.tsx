@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { BookCard, BookData } from '../components/library/BookCard';
 import { Link } from 'react-router-dom';
 import { FilterDropdown } from '../components/ui/FilterDropdown';
+import API_BASE_URL from '../apiConfig'; // <-- IMPORTA LA NUEVA CONFIGURACIÓN
 
 export function LibraryPage() {
   const [books, setBooks] = useState<BookData[]>([]);
@@ -15,7 +16,8 @@ export function LibraryPage() {
   useEffect(() => {
     async function fetchBooks() {
       try {
-        const response = await fetch('http://localhost:3001/api/books');
+        // USA LA NUEVA VARIABLE PARA CONSTRUIR LA URL
+        const response = await fetch(`${API_BASE_URL}/api/books`);
         if (!response.ok) {
           throw new Error('Failed to fetch data from the server.');
         }
