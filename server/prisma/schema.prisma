@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================================================
+//  MODELOS DE LA BASE DE DATOS
+// ==================================================
+
+model Book {
+  id              Int        @id @default(autoincrement())
+  title           String     @unique
+  description     String
+  difficulty      String
+  category        String
+  total_exercises Int
+  average_time    Int
+  exercises       Exercise[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model Exercise {
+  id              Int            @id @default(autoincrement())
+  book            Book           @relation(fields: [bookId], references: [id])
+  bookId          Int
+  position_fen    String
+  solution_moves  String
+  description     String?
+  hints           String?
+  order_index     Int
+  progress        UserProgress[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model User {
+  id              Int            @id @default(autoincrement())
+  username        String         @unique
+  email           String         @unique
+  password        String
+  total_time_played Int          @default(0)
+  progress        UserProgress[]
+  createdAt       DateTime       @default(now())
+}
+
+model UserProgress {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  exercise    Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId  Int
+  completed   Boolean  @default(false)
+  time_taken  Int? // en segundos
+  attempts    Int      @default(0)
+  best_time   Int? // en segundos
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, exerciseId]) // Un usuario solo puede tener un progreso por ejercicio
+}

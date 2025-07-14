@@ -1,0 +1,13 @@
+LIBRO: Tácticas Básicas de Mate
+DIFICULTAD: Principiante
+CATEGORIA: Táctica
+
+EJERCICIO 1:
+FEN: rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2
+DESCRIPCIÓN: Blancas juegan y dan mate en 2 movimientos
+SOLUCIÓN: 1.Qh5+ g6 2.Qxf7#
+
+EJERCICIO 2:
+FEN: 5rk1/p4ppp/1p2p3/2p5/2P5/1P4P1/P4PKP/3R4 w - - 0 25
+DESCRIPCIÓN: Mate en 1 con la torre.
+SOLUCIÓN: Rd8#
