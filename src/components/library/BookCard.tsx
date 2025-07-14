@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Book, Clock, BarChart3, Star } from "lucide-react";
+import { Book, Clock, Star } from "lucide-react"; // 'BarChart3' ha sido eliminado
 
 // Definimos el "tipo" de datos que espera nuestro componente
 export type BookData = {
